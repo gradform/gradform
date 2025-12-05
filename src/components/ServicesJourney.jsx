@@ -11,7 +11,7 @@ const ServiceCard = ({ icon, title, description, delay, onMoreInfoClick, detaile
 
   return (
     <motion.div
-      className="relative flex p-6 bg-white/10 rounded-2xl shadow-xl backdrop-blur-xl border border-white/20 max-w-xl w-full mx-auto h-full transition-all duration-200 hover:scale-[1.01] hover:rotate-0.5 hover:shadow-2xl hover:border-white/30 group text-left"
+      className="relative flex flex-col md:flex-row p-6 bg-white/10 rounded-2xl shadow-xl backdrop-blur-xl border border-white/20 max-w-xl w-full mx-auto h-full transition-all duration-200 hover:scale-[1.01] hover:rotate-0.5 hover:shadow-2xl hover:border-white/30 group text-left"
       initial={{ opacity: 0, x: initialX, rotate: 0 }}
       whileInView={{ opacity: 1, x: 0, rotate: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -19,17 +19,17 @@ const ServiceCard = ({ icon, title, description, delay, onMoreInfoClick, detaile
       whileHover={{ scale: 1.015, rotate: -0.5 }}
     >
       {/* Left Section */}
-      <div className="flex-1 flex items-center pr-4 relative">
-        <img src={icon} alt={title} className="w-12 h-12 object-contain mr-4" />
-        <h3 className="text-4xl font-bold text-white">{title}</h3>
+      <div className="flex-none md:flex-1 flex flex-col md:flex-row items-center md:items-center justify-center md:justify-start pb-4 md:pb-0 md:pr-4 relative">
+        <img src={icon} alt={title} className="w-12 h-12 object-contain mb-2 md:mb-0 mr-0 md:mr-4" />
+        <h3 className="text-2xl md:text-4xl font-bold text-white text-center md:text-left">{title}</h3>
       </div>
 
 
       {/* Right Section */}
-      <div className="flex-1 flex flex-col justify-center pl-4">
+      <div className="flex-1 flex flex-col justify-center pt-4 md:pt-0 md:pl-4 text-center md:text-left">
         <ul className="text-gray-300 text-sm space-y-1 mb-4">
           {description.map((item, index) => (
-            <li key={index} className="flex items-center transition-colors duration-200 group-hover:text-white">
+            <li key={index} className="flex items-center justify-center md:justify-start transition-colors duration-200 group-hover:text-white">
               <img src="/icons/plans/icon.png" alt="Gradform Icon" className="w-4 h-2 mr-2" />
               {item}
             </li>
@@ -37,7 +37,7 @@ const ServiceCard = ({ icon, title, description, delay, onMoreInfoClick, detaile
         </ul>
         <button
           onClick={onMoreInfoClick}
-          className="mt-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium"
+          className="mt-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium w-fit mx-auto md:mx-0"
         >
           More Info
         </button>
