@@ -5,7 +5,9 @@ const Hero = () => {
         autoPlay
         loop
         muted
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        playsInline
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
       >
         <source src="/videos/hero.mp4" type="video/mp4" />
         Your browser does not support the video tag.
