@@ -133,7 +133,7 @@ const ServicesJourney = () => {
 
   const services = [
     {
-      icon: "/public/icons/compass session.png",
+      icon: "/icons/compass session.png",
       title: "Compass Session",
       description: [
         "Personalized roadmap for your academic journey.",
@@ -144,7 +144,7 @@ const ServicesJourney = () => {
       detailedDescription: "Compass Session offers a personalized 1-on-1 consultation to provide a strategic roadmap for your academic goals. Get expert guidance on university selection and an overview of the application process with essential tips. This service is perfect for those just starting out, still figuring out countries, programs, or even if they should go abroad."
     },
     {
-      icon: "/public/icons/vault.png",
+      icon: "/icons/vault.png",
       title: "Vault",
       description: [
         "Polished, high-impact application package.",
@@ -155,7 +155,7 @@ const ServicesJourney = () => {
       detailedDescription: "Vault provides secure document management and organized storage for all your applications. Your story is crafted with precision, ensuring every detail strengthens your profile. Benefit from expert-reviewed SOPs, CVs, and forms built to stand out in competitive admissions. Submit with confidence, knowing everything is organized, refined, and error-free."
     },
     {
-      icon: "/public/icons/ascend.png",
+      icon: "/icons/ascend.png",
       title: "Ascend",
       description: [
         "Structured guidance to keep your application on track.",
@@ -166,7 +166,7 @@ const ServicesJourney = () => {
       detailedDescription: "Ascend offers structured guidance to keep your entire application on track. You'll receive expert check-ins, steady support, and clear accountability at every step. This service includes all Compass and Vault benefits, plus weekly sessions to refine decisions and documents. Move through the admission process with clarity, consistency, and confidence."
     },
     {
-      icon: "/public/icons/pinnacle.png",
+      icon: "/icons/pinnacle.png",
       title: "Pinnacle",
       description: [
         "Dedicated mentor from start to acceptance.",
