@@ -17,7 +17,7 @@ const ValueReveal = ({ title, description, delay, reverse = false }) => {
     >
       <div className={`flex flex-col md:flex-row items-center justify-center w-full ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
         <div className={`md:w-auto ${reverse ? 'text-right' : 'text-left'} px-4`}>
-          <h2 className="text-6xl md:text-8xl font-bold bg-white text-[#0000CD] leading-tight font-bricolage-24pt p-4 inline-block rounded-lg">
+          <h2 className="text-4xl md:text-8xl font-bold bg-white text-[#0000CD] leading-tight font-bricolage-24pt p-4 inline-block rounded-lg">
             {title}
           </h2>
         </div>
