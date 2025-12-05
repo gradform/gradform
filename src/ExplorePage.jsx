@@ -241,7 +241,7 @@ function ExplorePage() {
           >
             Your browser does not support the video tag.
           </video>
-          <div className="relative z-10 p-4 -translate-y-10 flex flex-col items-center">
+          <div className="relative z-10 p-4 pt-20 md:pt-4 -translate-y-10 flex flex-col items-center">
             <img src="/images/logo-large.png" alt="Gradform Logo" className="h-24 mx-auto mb-4 animate-fadeInUp drop-shadow-lg" style={{ animationDelay: '0s' }} />
             <h1 className="text-4xl md:text-6xl font-bricolage-24pt text-white text-center font-bold drop-shadow-lg" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>Our Destinations</h1>
             <div className="mt-8 flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-3 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
