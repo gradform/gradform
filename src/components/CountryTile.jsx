@@ -35,7 +35,9 @@ const CountryTile = ({ country, onClick }) => {
   return (
     <div
       ref={tileRef}
-      className={`relative group cursor-pointer rounded-lg overflow-hidden shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex flex-col will-change-transform will-change-shadow ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+      className={`relative group cursor-pointer rounded-lg overflow-hidden shadow-lg transition-all duration-300 ease-in-out flex flex-col will-change-transform will-change-shadow
+        ${isVisible ? 'opacity-100 translate-y-0 scale-100 rotate-0' : 'opacity-0 translate-y-20 scale-95 rotate-3'}
+        md:hover:scale-105`}
       onClick={() => onClick(country)}
     >
       {/* Tile Picture with 3:2 aspect ratio */}
