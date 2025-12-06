@@ -35,9 +35,7 @@ const CountryTile = ({ country, onClick }) => {
   return (
     <div
       ref={tileRef}
-      className={`relative group cursor-pointer rounded-lg overflow-hidden shadow-lg transition-all duration-300 ease-in-out flex flex-col will-change-transform will-change-shadow
-        ${isVisible ? 'opacity-100 translate-y-0 scale-100 rotate-0' : 'opacity-0 translate-y-20 scale-95 rotate-3'}
-        md:hover:scale-105`}
+      className={`relative group cursor-pointer rounded-lg overflow-hidden shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex flex-col will-change-transform will-change-shadow ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
       onClick={() => onClick(country)}
     >
       {/* Tile Picture with 3:2 aspect ratio */}
@@ -60,7 +58,7 @@ const CountryTile = ({ country, onClick }) => {
           Study in {country.name}
         </p>
         {/* "Read More" text and icon appear on hover */}
-        <div className="absolute inset-0 bg-[#0000CD] bg-opacity-90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 will-change-opacity">
+        <div className="absolute inset-0 bg-[#0000CD] bg-opacity-90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out will-change-opacity">
           <BookOpenIcon className="h-5 w-5 text-white mb-1 group-hover:-translate-y-1 transition-transform duration-300 ease-in-out" />
           <span className="text-white text-base font-bold group-hover:-translate-y-1 transition-transform duration-300 ease-in-out">Read More</span>
         </div>
