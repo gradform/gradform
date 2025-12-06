@@ -1,0 +1,435 @@
+@import "tailwindcss";
+
+
+@font-face {
+  font-family: 'Inter_18pt-Regular';
+  src: url('../public/fonts/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/public/fonts/BricolageGrotesque_24pt-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Custom animations for components */
+@keyframes scroll-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Original Ribbon Animations from index.html */
+@keyframes organicFloat1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate(1px, -8px) rotate(-0.5deg) scale(1.002); }
+  66% { transform: translate(-5px, 10px) rotate(1deg) scale(1.001); }
+}
+
+@keyframes organicFloat2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate(-4px, 7px) rotate(0.8deg) scale(1.001); }
+  66% { transform: translate(3px, -12px) rotate(-1.2deg) scale(1.003); }
+}
+
+@keyframes organicFloat3 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  33% { transform: translate(-6px, 8px) rotate(1.5deg) scale(1.002); }
+  66% { transform: translate(4px, -6px) rotate(-0.8deg) scale(1.001); }
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+.font-melodrame {
+  font-family: 'Relationship of mélodrame', cursive;
+}
+
+
+
+@keyframes pulse {
+  from {
+    stroke-opacity: 0.1;
+  }
+  to {
+    stroke-opacity: 0.3;
+  }
+}
+
+@keyframes background-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.glass-button {
+  background-color: rgba(255, 255, 255, 0.15); /* Lighter frosted transparency */
+  backdrop-filter: blur(10px); /* Softer frosted effect */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+  color: white; /* Ensure text is white */
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.glass-button:hover {
+  background-color: rgba(255, 255, 255, 0.25); /* Slightly more opaque on hover */
+  border-color: rgba(255, 255, 255, 0.4); /* Slightly more prominent border on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+}
+
+.header-nav-link {
+  position: relative;
+  padding: 8px 12px; /* Adjust padding for button-like appearance */
+  border-radius: 8px; /* Rounded corners */
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.header-nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 198, 255, 0.3), rgba(156, 39, 176, 0.3), rgba(0, 198, 255, 0.3));
+  background-size: 200% 100%;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: -1;
+}
+
+.header-nav-link:hover::before {
+  transform: translateX(0%);
+}
+
+.header-nav-link:hover {
+  color: white; /* Text remains white on hover */
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.6);
+}
+
+
+
+/* Define the core blob style for the soft, luminous look */
+.blob {
+    position: absolute;
+    border-radius: 50%; /* Maintain circular shape, blur will soften it */
+    filter: blur(200px); /* Adjusted blur for a more diffused, cloud-like form */
+    opacity: 0.3; /* Adjusted opacity for better blending */
+    z-index: 1; /* Above the body background but below content */
+    box-shadow: none;
+    will-change: transform;
+    overflow: hidden;
+    border: none;
+}
+
+/* --- Individual Blob Styles and Colors & Circular Shapes --- */
+
+/* Blob 1: Soft Cyan/Aqua (Top Left) */
+.blob-1 {
+    width: 900px; /* Increased size */
+    height: 900px; /* Increased size */
+    top: -150px; /* Adjusted position */
+    left: -150px; /* Adjusted position */
+    background: radial-gradient(circle at 50% 50%,
+        rgba(0, 255, 255, 0.2) 0%, /* Cyan */
+        rgba(0, 191, 255, 0.2) 30%, /* Deep Sky Blue */
+        rgba(64, 224, 208, 0.15) 60%, /* Turquoise */
+        rgba(0, 0, 139, 0) 85% /* Deep Royal Blue (fade to transparent) */
+    );
+    animation: moveBlob1 30s infinite alternate ease-in-out; /* Adjusted animation speed */
+}
+
+/* Blob 2: Deep Indigo/Navy (Bottom Right) */
+.blob-2 {
+    width: 800px; /* Increased size */
+    height: 800px; /* Increased size */
+    bottom: -200px; /* Adjusted position */
+    right: -200px; /* Adjusted position */
+    background: radial-gradient(circle at 50% 50%,
+        rgba(30, 144, 255, 0.2) 0%, /* Dodger Blue */
+        rgba(0, 255, 255, 0.2) 30%, /* Cyan */
+        rgba(72, 61, 139, 0.15) 60%, /* Dark Slate Blue */
+        rgba(0, 0, 139, 0) 85%
+    );
+    animation: moveBlob2 25s infinite alternate-reverse ease-in-out; /* Adjusted animation speed */
+}
+
+/* Blob 3: Muted Violet/Lavender (Center Left) */
+.blob-3 {
+    width: 700px; /* Increased size */
+    height: 700px; /* Increased size */
+    top: 35%; /* Adjusted position */
+    left: 0%; /* Adjusted position */
+    background: radial-gradient(circle at 50% 50%,
+        rgba(135, 206, 250, 0.2) 0%, /* Light Sky Blue */
+        rgba(0, 191, 255, 0.2) 30%, /* Deep Sky Blue */
+        rgba(0, 206, 209, 0.15) 60%, /* Dark Cyan */
+        rgba(0, 0, 139, 0) 85%
+    );
+    animation: moveBlob3 33s infinite alternate ease-in-out; /* Adjusted animation speed */
+}
+
+/* --- Keyframe Animations for Slow, Fluid Position and Scale Movement --- */
+
+@keyframes moveBlob1 {
+    0% { transform: translate(-200px, 100px) scale(1); opacity: 0.25; }
+    50% { transform: translate(250px, 150px) scale(1.15); opacity: 0.3; }
+    100% { transform: translate(-200px, 100px) scale(1); opacity: 0.25; }
+}
+
+@keyframes moveBlob2 {
+    0% { transform: translate(100px, -100px) scale(0.85); opacity: 0.25; }
+    50% { transform: translate(-150px, 200px) scale(1.1); opacity: 0.3; }
+    100% { transform: translate(100px, -100px) scale(0.85); opacity: 0.25; }
+}
+
+@keyframes moveBlob3 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+    50% { transform: translate(-200px, 150px) scale(1.2); opacity: 0.3; }
+    100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+}
+
+/* Updated Ribbon Styles from index.html */
+.ribbon {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 900px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ribbon-left {
+  left: -350px;
+  transform: scaleX(1);
+}
+
+.ribbon-right {
+  right: -350px;
+  transform: scaleX(-1);
+}
+
+.ribbon path {
+  stroke-width: 3px;
+  stroke-linecap: round;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.4);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.ribbon-left path:nth-child(1) { animation: organicFloat1 45s infinite; }
+.ribbon-left path:nth-child(2) { animation: organicFloat2 48s infinite; animation-delay: 5s; }
+.ribbon-left path:nth-child(3) { animation: organicFloat3 43s infinite; animation-delay: 10s; }
+.ribbon-left path:nth-child(4) { animation: organicFloat1 47s infinite; animation-delay: 15s; }
+.ribbon-left path:nth-child(5) { animation: organicFloat2 49s infinite; animation-delay: 20s; }
+.ribbon-left path:nth-child(6) { animation: organicFloat3 42s infinite; animation-delay: 25s; }
+.ribbon-left path:nth-child(7) { animation: organicFloat1 46s infinite; animation-delay: 30s; }
+.ribbon-left path:nth-child(8) { animation: organicFloat2 51s infinite; animation-delay: 35s; }
+
+.ribbon-right path:nth-child(1) { animation: organicFloat1 48s infinite; animation-delay: 2s; }
+.ribbon-right path:nth-child(2) { animation: organicFloat2 52s infinite; animation-delay: 7s; }
+.ribbon-right path:nth-child(3) { animation: organicFloat3 46s infinite; animation-delay: 12s; }
+.ribbon-right path:nth-child(4) { animation: organicFloat1 50s infinite; animation-delay: 17s; }
+.ribbon-right path:nth-child(5) { animation: organicFloat2 44s infinite; animation-delay: 22s; }
+.ribbon-right path:nth-child(6) { animation: organicFloat3 49s infinite; animation-delay: 27s; }
+.ribbon-right path:nth-child(7) { animation: organicFloat1 53s infinite; animation-delay: 32s; }
+.ribbon-right path:nth-child(8) { animation: organicFloat2 45s infinite; animation-delay: 37s; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ribbon {
+    width: 450px; /* Halved from 900px */
+    opacity: 0.6; /* Make them a bit more subtle */
+  }
+
+  .ribbon-left {
+    left: -250px; /* Adjusted position */
+  }
+
+  .ribbon-right {
+    right: -250px; /* Adjusted position */
+  }
+}
+
+/* Carousel styles from index.html */
+.carousel-snap-track {
+    -webkit-overflow-scrolling: touch; 
+}
+
+/* Hide scrollbar for elements with hide-scrollbar class */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for carousel-snap-track */
+.carousel-snap-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-snap-track {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Item settings remain the same */
+.carousel-item {
+    flex-shrink: 0; 
+}
+
+/* Keyframe animation for a subtle, magical pulse */
+@keyframes pulsing-glow {
+    0%, 100% {
+        box-shadow: 0 0 40px rgba(129, 140, 248, 0.7); /* Starting glow intensity */
+    }
+    50% {
+        box-shadow: 0 0 65px rgba(129, 140, 248, 1); /* Peak glow intensity */
+    }
+}
+
+/* New base style for the magic tile, including the frosted effect */
+.magic-tile {
+    transition: all 0.3s ease-in-out;
+    /* Frosted Glass Effect - Significantly Whiter and Stronger Blur */
+    background-color: rgba(255, 255, 255, 0.25); 
+    backdrop-filter: blur(25px); 
+    -webkit-backdrop-filter: blur(25px); /* Safari support */
+}
+
+/* Custom hover effect for enhanced magic glow */
+.magic-tile:hover {
+    /* Starts the pulsing animation on hover */
+    animation: pulsing-glow 1.5s infinite alternate; 
+    
+    /* Enhanced scale and background */
+    transform: scale(1.03); 
+    background-color: rgba(255, 255, 255, 0.35); /* Even brighter hover background */
+    border-color: rgba(129, 140, 248, 0.7); /* Subtle border change */
+}
+
+/* Styling for highlighted service name text */
+.highlighted-title {
+    color: #0000cd; /* Deep Blue Text */
+    background-color: white; /* White Background */
+    padding: 2px 8px; /* Padding for the highlight block */
+    border-radius: 4px; /* Slight rounding for the highlight */
+    display: inline-block; /* Essential to wrap background around text */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: bold; /* Make Bricolage Grotesque bold */
+}
+
+/* body {
+  font-family: 'SFUIText-Regular', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+} */
+
+@keyframes bubble-float {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5px, -5px);
+  }
+  50% {
+    transform: translate(-5px, 5px);
+  }
+  75% {
+    transform: translate(5px, 5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.bubble-float {
+  animation: bubble-float 10s ease-in-out infinite;
+}
+
+.country-tile-font {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%); /* Scrolls the entire duplicated content (4 sets of logos) */
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 20s linear infinite; /* Loop time set to 20 seconds, with significantly faster perceived movement */
+}
