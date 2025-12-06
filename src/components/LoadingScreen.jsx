@@ -13,7 +13,7 @@ const LoadingScreen = () => {
       <motion.img
         src="/images/icon-asset.png"
         alt="Gradform Icon"
-        className="h-24 w-24"
+        className="h-24 w-48 object-contain"
         animate={{
           scale: [1, 1.1, 1],
           opacity: [0.8, 1, 0.8],
