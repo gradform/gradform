@@ -1,4 +1,5 @@
-import React, { Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import GradformAI from './components/GradformAI'; // New import
@@ -11,6 +12,7 @@ import Footer from './components/Footer';
 import Ribbons from './components/Ribbons';
 import WhatsAppButton from './components/WhatsAppButton';
 import ScrollToTop from './components/ScrollToTop'; // Import ScrollToTop
+import LoadingScreen from './components/LoadingScreen'; // Import LoadingScreen
 
 // Lazy load page components
 const ExplorePage = React.lazy(() => import('./ExplorePage'));
@@ -18,12 +20,25 @@ const PlansPage = React.lazy(() => import('./PlansPage'));
 const About = React.lazy(() => import('./components/About'));
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); // Show loading screen for 1 second
+
+    return () => clearTimeout(timer);
+  }, [location]); // Trigger loading screen on route change
+
   return (
     <div className="bg-linear-to-r from-[#0000CD] via-[#0000B0] to-[#4B0082] text-white">
+      {isLoading && <LoadingScreen />}
       <ScrollToTop /> {/* Add ScrollToTop component here */}
       <Header />
       <Ribbons />
-      <Suspense fallback={<div>Loading page...</div>}> {/* Add a fallback for lazy loaded components */}
+      <Suspense fallback={<div></div>}> {/* Empty fallback as LoadingScreen handles visual */}
         <Routes>
           <Route path="/" element={
             <main className="relative z-10">
