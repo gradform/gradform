@@ -8,10 +8,10 @@ const LoadingScreen = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-[#0000CD] via-[#0000B0] to-[#4B0082]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-linear-to-br from-[#0000CD] via-[#0000B0] to-[#4B0082]"
     >
       <motion.img
-        src="/public/icons/gradform-icon.png"
+        src="/images/icon-asset.png"
         alt="Gradform Icon"
         className="h-24 w-24"
         animate={{
