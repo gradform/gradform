@@ -27,7 +27,7 @@ function App() {
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Show loading screen for 1 second
+    }, 2000); // Show loading screen for 2 seconds
 
     return () => clearTimeout(timer);
   }, [location]); // Trigger loading screen on route change
