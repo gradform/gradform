@@ -49,7 +49,6 @@ const CountryTile = ({ country, onClick }) => {
           src="/images/icon-asset.png"
           alt="Gradform Logo"
           className="absolute top-1 right-4 h-14 w-12 object-contain"
-          loading="lazy"
         />
       </div>
 
@@ -59,7 +58,7 @@ const CountryTile = ({ country, onClick }) => {
           Study in {country.name}
         </p>
         {/* "Read More" text and icon appear on hover */}
-        <div className="absolute inset-0 bg-[#0000CD] bg-opacity-90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out will-change-opacity">
+        <div className="absolute inset-0 bg-[#0000CD] bg-opacity-90 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 will-change-opacity">
           <BookOpenIcon className="h-5 w-5 text-white mb-1 group-hover:-translate-y-1 transition-transform duration-300 ease-in-out" />
           <span className="text-white text-base font-bold group-hover:-translate-y-1 transition-transform duration-300 ease-in-out">Read More</span>
         </div>
