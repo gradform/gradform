@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa'; // For the CTA button arrow
 import GradformQuizModal from './GradformQuizModal'; // Import the new quiz modal component
 import ServiceDetailModal from './ServiceDetailModal'; // Import the new service detail modal
 import ComparisonTable from './ComparisonTable'; // Import the new comparison table
+import useIntersectionObserver from '../hooks/useIntersectionObserver'; // Import the hook
 
 const ServiceCard = ({ icon, title, description, delay, onMoreInfoClick, detailedDescription }) => {
-  const initialX = -50; // All cards left-aligned, subtle slide
+  const [ref, isIntersecting] = useIntersectionObserver({
+    threshold: 0.1,
+  });
 
   return (
     <motion.div
-      className="relative flex flex-col md:flex-row p-6 bg-white/10 rounded-2xl shadow-xl backdrop-blur-xl border border-white/20 max-w-xl w-full mx-auto h-full transition-all duration-200 hover:scale-[1.01] hover:rotate-0.5 hover:shadow-2xl hover:border-white/30 group text-left"
-      initial={{ opacity: 0, x: initialX, rotate: 0 }}
-      whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+      ref={ref}
+      className={`relative flex flex-col md:flex-row p-6 bg-white/10 rounded-2xl shadow-xl backdrop-blur-xl border border-white/20 max-w-xl w-full mx-auto h-full transition-all duration-200 group text-left
+        ${isIntersecting ? 'opacity-100 translate-y-0 scale-100 rotate-0' : 'opacity-0 translate-y-20 scale-95 rotate-3'}
+        md:hover:scale-[1.01] md:hover:rotate-0.5 md:hover:shadow-2xl md:hover:border-white/30`}
+      initial={{ opacity: 0, y: 20, scale: 0.95, rotate: 3 }} // Initial state for mobile animation
+      whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }} // Animation for mobile
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay, ease: "easeOut" }}
-      whileHover={{ scale: 1.015, rotate: -0.5 }}
     >
       {/* Left Section */}
       <div className="flex-none md:flex-1 flex flex-col md:flex-row items-center md:items-center justify-center md:justify-start pb-4 md:pb-0 md:pr-4 relative">
