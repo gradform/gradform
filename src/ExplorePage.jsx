@@ -261,7 +261,6 @@ function ExplorePage() {
                 <CountryTile
                   key={country.name}
                   country={country}
-                  delay={index * 0.15} // Staggered delay for each tile
                   onClick={() => {
                     setModalCountryTitle(country.name);
                     setModalCountryDescription(country.info);
