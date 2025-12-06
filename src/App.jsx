@@ -24,12 +24,16 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Show loading screen for 2 seconds
+    // Only show loading screen if not on the initial load of the current page
+    // and if the route is actually changing.
+    if (location.pathname !== window.location.pathname) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 2000); // Show loading screen for 2 seconds
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [location]); // Trigger loading screen on route change
 
   return (
