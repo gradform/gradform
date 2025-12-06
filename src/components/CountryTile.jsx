@@ -49,6 +49,7 @@ const CountryTile = ({ country, onClick }) => {
           src="/images/icon-asset.png"
           alt="Gradform Logo"
           className="absolute top-1 right-4 h-14 w-12 object-contain"
+          loading="lazy"
         />
       </div>
 
