@@ -18,6 +18,7 @@ import LoadingScreen from './components/LoadingScreen'; // Import LoadingScreen
 const ExplorePage = React.lazy(() => import('./ExplorePage'));
 const PlansPage = React.lazy(() => import('./PlansPage'));
 const About = React.lazy(() => import('./components/About'));
+const Faqs = React.lazy(() => import('./components/Faqs'));
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +53,7 @@ function App() {
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/faqs" element={<Faqs />} />
         </Routes>
       </Suspense>
       <Footer />

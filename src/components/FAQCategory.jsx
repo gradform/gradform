@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import FAQItem from './FAQItem';
+import FAQItem from './FAQItem'; // Assuming FAQItem is in the same directory
 
 const FAQCategory = ({ category, questions }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,9 +8,9 @@ const FAQCategory = ({ category, questions }) => {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <div className="mb-8">
+    <div className="mb-6">
       <motion.button
-        className="w-full flex justify-between items-center p-6 rounded-2xl bg-white/10 backdrop-blur-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out text-left mb-4"
+        className="w-full flex justify-between items-center p-5 rounded-xl bg-white/10 backdrop-blur-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out text-left border border-white/20"
         onClick={toggleOpen}
         initial={false}
         animate={{
@@ -19,9 +19,9 @@ const FAQCategory = ({ category, questions }) => {
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        <span className="text-white font-bold text-sm font-inter">{category}</span>
+        <h3 className="text-white font-bold text-lg font-bricolage-24pt">{category}</h3>
         <motion.span
-          className="text-white text-base"
+          className="text-white text-xl"
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
@@ -39,13 +39,11 @@ const FAQCategory = ({ category, questions }) => {
               collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="overflow-hidden"
+            className="overflow-hidden mt-4 px-2"
           >
-            <div className="px-2"> {/* Added padding for nested FAQ items */}
-              {questions.map((faq, faqIndex) => (
-                <FAQItem key={faqIndex} question={faq.q} answer={faq.a} />
-              ))}
-            </div>
+            {questions.map((faq, index) => (
+              <FAQItem key={index} question={faq.q} answer={faq.a} />
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
