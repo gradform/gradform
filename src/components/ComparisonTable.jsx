@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { FaCheckCircle, FaTimesCircle, FaChevronDown } from 'react-icons/fa'; // Added FaChevronDown for dropdowns
 
 const allServices = [
-  { title: "Compass Session", key: "compass", icon: "/public/icons/compass session.png", description: "Clarity & Direction" },
-  { title: "Vault", key: "vault", icon: "/public/icons/vault.png", description: "Application Documents" },
-  { title: "Ascend", key: "ascend", icon: "/public/icons/ascend.png", description: "Guided Journey" },
-  { title: "Pinnacle", key: "pinnacle", icon: "/public/icons/pinnacle.png", description: "Full Admissions Mastery" },
+  { title: "Compass Session", key: "compass", icon: "/public/icons/compass session.png" },
+  { title: "Vault", key: "vault", icon: "/public/icons/vault.png" },
+  { title: "Ascend", key: "ascend", icon: "/public/icons/ascend.png" },
+  { title: "Pinnacle", key: "pinnacle", icon: "/public/icons/pinnacle.png" },
 ];
 
 const features = [
@@ -189,15 +189,13 @@ const ComparisonTable = () => {
               Features
             </div>
             {service1Data && (
-              <div className="text-center text-sm font-medium text-gray-300 uppercase tracking-wider flex flex-col items-center justify-center">
-                <span className="block text-white text-2xl font-bold font-bricolage-24pt">{service1Data.title}</span>
-                <span className="block text-gray-400 text-base mt-2">{service1Data.description}</span>
+              <div className="text-center text-sm font-medium text-gray-300 tracking-wider flex flex-col items-center justify-center">
+                <span className="block text-white text-xl font-bold font-bricolage-24pt">{service1Data.title}</span>
               </div>
             )}
             {service2Data && (
-              <div className="text-center text-sm font-medium text-gray-300 uppercase tracking-wider flex flex-col items-center justify-center">
-                <span className="block text-white text-2xl font-bold font-bricolage-24pt">{service2Data.title}</span>
-                <span className="block text-gray-400 text-base mt-2">{service2Data.description}</span>
+              <div className="text-center text-sm font-medium text-gray-300 tracking-wider flex flex-col items-center justify-center">
+                <span className="block text-white text-xl font-bold font-bricolage-24pt">{service2Data.title}</span>
               </div>
             )}
           </div>
