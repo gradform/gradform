@@ -30,11 +30,11 @@ const ServiceCard = ({ icon, title, description, delay, onMoreInfoClick, detaile
 
 
       {/* Right Section */}
-      <div className="flex-1 flex flex-col justify-center pt-4 md:pt-0 md:pl-4 text-center md:text-left">
+      <div className="flex-1 flex flex-col justify-center pt-4 md:pt-0 md:pl-4 text-left">
         <ul className="text-gray-300 text-sm space-y-1 mb-4">
           {description.map((item, index) => (
-            <li key={index} className="flex items-center justify-center md:justify-start transition-colors duration-200 group-hover:text-white">
-              <img src="/icons/plans/icon.png" alt="Gradform Icon" className="w-4 h-2 mr-2" />
+            <li key={index} className="flex items-start justify-start transition-colors duration-200 group-hover:text-white">
+              <img src="/icons/plans/icon.png" alt="Gradform Icon" className="w-4 h-2 mr-2 mt-1" />
               {item}
             </li>
           ))}
