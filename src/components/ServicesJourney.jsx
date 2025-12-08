@@ -14,12 +14,11 @@ const ServiceCard = ({ icon, title, description, delay, onMoreInfoClick, detaile
   return (
     <motion.div
       ref={ref}
-      className={`relative flex flex-col md:flex-row p-6 bg-white/10 rounded-2xl shadow-xl backdrop-blur-xl border border-white/20 max-w-xl w-full mx-auto h-full transition-all duration-200 group text-left
+      className={`relative flex flex-col md:flex-row p-6 bg-white/10 rounded-2xl shadow-xl backdrop-blur-xl border border-white/20 max-w-xl w-full mx-auto h-full group text-left
         ${isIntersecting ? 'opacity-100 translate-y-0 scale-100 rotate-0' : 'opacity-0 translate-y-20 scale-95 rotate-3'}
         md:hover:scale-[1.01] md:hover:rotate-0.5 md:hover:shadow-2xl md:hover:border-white/30`}
-      initial={{ opacity: 0, y: 20, scale: 0.95, rotate: 3 }} // Initial state for mobile animation
+      initial={false} // Let framer-motion handle initial state based on whileInView
       whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }} // Animation for mobile
-      viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay, ease: "easeOut" }}
     >
       {/* Left Section */}
