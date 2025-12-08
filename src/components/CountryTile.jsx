@@ -1,17 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion'; // Import motion
 import { BookOpenIcon } from '@heroicons/react/24/solid'; // Using BookOpenIcon for "Read More"
 
 // Component for displaying individual country tiles on the Explore page
 const CountryTile = ({ country, onClick }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const tileRef = useRef(null);
+  const [ref, isIntersecting] = useState(false); // Use state for intersection
+  const observerRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(tileRef.current);
+          isIntersecting(true);
+          observer.unobserve(observerRef.current);
         }
       },
       {
@@ -21,21 +22,24 @@ const CountryTile = ({ country, onClick }) => {
       }
     );
 
-    if (tileRef.current) {
-      observer.observe(tileRef.current);
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
     }
 
     return () => {
-      if (tileRef.current) {
-        observer.unobserve(tileRef.current);
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
       }
     };
   }, []);
 
   return (
-    <div
-      ref={tileRef}
-      className={`relative group cursor-pointer rounded-lg overflow-hidden shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 flex flex-col will-change-transform will-change-shadow ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+    <motion.div
+      ref={observerRef}
+      className="relative group cursor-pointer rounded-lg overflow-hidden shadow-lg transform hover:scale-105 flex flex-col will-change-transform will-change-shadow"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isIntersecting ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       onClick={() => onClick(country)}
     >
       {/* Tile Picture with 3:2 aspect ratio */}
@@ -63,7 +67,7 @@ const CountryTile = ({ country, onClick }) => {
           <span className="text-white text-base font-bold group-hover:-translate-y-1 transition-transform duration-300 ease-in-out">Read More</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
