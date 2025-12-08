@@ -237,6 +237,7 @@ function ExplorePage() {
             disablePictureInPicture
             preload="auto"
             loading="eager"
+            controls={false}
             className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
             src="/videos/hero-explore.mp4"
           >

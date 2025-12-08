@@ -19,6 +19,7 @@ const ExplorePage = React.lazy(() => import('./ExplorePage'));
 const PlansPage = React.lazy(() => import('./PlansPage'));
 const About = React.lazy(() => import('./components/About'));
 const Faqs = React.lazy(() => import('./components/Faqs'));
+const BlogPage = React.lazy(() => import('./BlogPage'));
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +55,7 @@ function App() {
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/faqs" element={<Faqs />} />
+          <Route path="/blogs" element={<BlogPage />} />
         </Routes>
       </Suspense>
       <Footer />

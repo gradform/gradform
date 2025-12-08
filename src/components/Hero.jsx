@@ -9,6 +9,7 @@ const Hero = () => {
         disablePictureInPicture
         preload="auto"
         loading="eager"
+        controls={false}
         className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
       >
         <source src="/videos/hero.mp4" type="video/mp4" />
