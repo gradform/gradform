@@ -90,7 +90,7 @@ const PlansPage = () => { // Component name matches file name
               {/* Left side: Logo and Headline */}
               <div className="w-full md:w-1/2 text-left mb-8 md:mb-0 md:translate-x-[10%]">
                 <img src="/images/logo-large.png" alt="Gradform Logo" className="h-24 mx-auto mb-4 animate-fadeInUp drop-shadow-lg" style={{ animationDelay: '0s' }} />
-                <h1 className="text-3xl md:text-5xl font-bricolage-24pt text-white animate-fadeInUp font-bold leading-tight text-left" style={{ animationDelay: '0.2s', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
+                <h1 className="text-4xl md:text-5xl font-bricolage-24pt text-white animate-fadeInUp font-bold leading-tight text-center" style={{ animationDelay: '0.2s', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                   Unlock Your <br /> Global Future
                 </h1>
                 <p className="text-base text-blue-100 leading-relaxed mt-4 animate-fadeInUp text-justify md:text-justify" style={{ animationDelay: '0.4s' }}>
