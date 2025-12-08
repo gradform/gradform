@@ -88,16 +88,16 @@ const PlansPage = () => { // Component name matches file name
           )}>
             <div className="relative z-10 p-4 flex flex-col md:flex-row items-center justify-center md:space-x-12 w-full">
               {/* Left side: Logo and Headline */}
-              <div className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0 md:translate-x-[10%]">
-                <img src="/images/logo-large.png" alt="Gradform Logo" className="h-24 mx-auto md:mx-0 mb-4 animate-fadeInUp drop-shadow-lg" style={{ animationDelay: '0s' }} />
-                <h1 className="text-3xl md:text-5xl font-bricolage-24pt text-white animate-fadeInUp font-bold leading-tight" style={{ animationDelay: '0.2s', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
+              <div className="w-full md:w-1/2 text-left mb-8 md:mb-0 md:translate-x-[10%]">
+                <img src="/images/logo-large.png" alt="Gradform Logo" className="h-24 md:mx-0 mb-4 animate-fadeInUp drop-shadow-lg" style={{ animationDelay: '0s' }} />
+                <h1 className="text-3xl md:text-5xl font-bricolage-24pt text-white animate-fadeInUp font-bold leading-tight text-left" style={{ animationDelay: '0.2s', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                   Unlock Your <br /> Global Future
                 </h1>
-                <p className="text-lg text-blue-100 leading-relaxed mt-4 animate-fadeInUp text-center md:text-justify" style={{ animationDelay: '0.4s' }}>
+                <p className="text-lg text-blue-100 leading-relaxed mt-4 animate-fadeInUp text-left md:text-justify" style={{ animationDelay: '0.4s' }}>
                   Explore our tailored services, meticulously designed to guide you through every intricate step of your international academic journey. We provide comprehensive support, ensuring you navigate global admissions with confidence and clarity.
                 </p>
-                <div className="flex flex-col md:flex-row items-center justify-center md:justify-start mt-8 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
-                  <h2 className="text-2xl md:text-3xl font-bricolage-24pt text-white font-bold leading-tight text-center md:text-left mr-4" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
+                <div className="flex flex-col md:flex-row items-center justify-start md:justify-start mt-8 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
+                  <h2 className="text-2xl md:text-3xl font-bricolage-24pt text-white font-bold leading-tight text-left mr-4" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                     Book Your Free Discovery Call
                   </h2>
                   <button id="get-started-button" onClick={handleOpenPlansQuizModal} className="mt-4 md:mt-0 bg-white text-[#0000CD] px-6 py-2.5 rounded-xl hover:bg-blue-100 hover:shadow-2xl hover:shadow-[#0000CD]/70 transition-all duration-300 text-base font-medium">
