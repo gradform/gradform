@@ -22,7 +22,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#0000CD] px-6 py-2 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="ml-4">
-          <img src="/images/logo-large.png" alt="Gradform Logo" className="h-9" />
+          <img src="/images/icon-asset.png" alt="Gradform Logo" className="h-9" />
         </Link>
         <nav className="hidden md:flex items-center space-x-4 font-inter grow justify-center translate-x-3">
           {navLinks.map((link) => (
