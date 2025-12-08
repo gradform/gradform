@@ -81,7 +81,7 @@ const features = [
     pinnacle: true,
   },
   {
-    name: "Scholarship/Financial Aid Strategy",
+    name: "Scholarship/ Financial Aid Strategy",
     compass: false,
     vault: false,
     ascend: false,
