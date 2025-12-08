@@ -93,8 +93,8 @@ const PlansPage = () => { // Component name matches file name
                 <h1 className="text-3xl md:text-5xl font-bricolage-24pt text-white animate-fadeInUp font-bold leading-tight text-left" style={{ animationDelay: '0.2s', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
                   Unlock Your <br /> Global Future
                 </h1>
-                <p className="text-lg text-blue-100 leading-relaxed mt-4 animate-fadeInUp text-justify md:text-justify" style={{ animationDelay: '0.4s' }}>
-                  Explore our tailored services, meticulously designed to guide you through every intricate step of your international academic journey. We provide comprehensive support, ensuring you navigate global admissions with confidence and clarity.
+                <p className="text-base text-blue-100 leading-relaxed mt-4 animate-fadeInUp text-justify md:text-justify" style={{ animationDelay: '0.4s' }}>
+                  Explore our tailored plans, meticulously designed to guide you through every intricate step of your international academic journey. We provide comprehensive support, ensuring you navigate global admissions with confidence and clarity.
                 </p>
                 <div className="flex flex-col md:flex-row items-center justify-start md:justify-start mt-8 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
                   <h2 className="text-lg md:text-3xl font-bricolage-24pt text-white font-bold leading-tight text-left mr-4" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
