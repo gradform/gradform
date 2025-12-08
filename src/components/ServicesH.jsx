@@ -48,14 +48,14 @@ const ServicesH = () => { // Renamed component to ServicesH
             <MagicBento key={service.id} glowColor="0, 0, 205"> {/* Medium Blue */}
               <div className="flex flex-col items-start p-5 h-full"> {/* Removed subtle pop-up animation */}
                 <div className="flex items-center mb-3">
-                  <h2 className="text-lg font-bricolage-24pt font-semibold text-white mr-2">
-                    <span className="highlighted-title">{service.title}</span>
-                  </h2>
-                  <div className="text-white">
+                  <div className="text-white mr-2">
                     {service.icon}
                   </div>
+                  <h2 className="text-lg font-bricolage-24pt font-semibold text-white">
+                    <span className="highlighted-title">{service.title}</span>
+                  </h2>
                 </div>
-                <p className="text-sm text-indigo-300 leading-normal text-justify px-0">
+                <p className="text-sm text-indigo-300 leading-normal text-left px-0">
                   {service.description}
                 </p>
               </div>
