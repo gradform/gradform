@@ -205,6 +205,7 @@ ic  }
                             src={logo}
                             alt={`University Logo ${index}`}
                             className="h-12 mx-2 inline-block object-contain"
+                            loading="eager"
                           />
                         ))}
                       </div>
