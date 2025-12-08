@@ -86,7 +86,7 @@ const GradformAI = () => {
       <CustomStyles />
       <div className="container mx-auto text-center px-4">
         <div className="max-w-4xl mx-auto"> {/* Removed frosted glass classes */}
-          <h2 className="text-5xl font-bricolage-24pt font-semibold mb-4 text-white">Try Gradform AI</h2>
+          <h2 className="text-5xl font-bricolage-24pt font-semibold mb-4 text-white">Gradform AI</h2>
           <p className="text-lg font-neue-haas-grotesk text-blue-100 leading-relaxed mb-8 text-center">
             An intelligent tool that organizes your achievements and highlights your academic potential.
           </p>
@@ -94,7 +94,7 @@ const GradformAI = () => {
           <div className="glow-container">
             {/* 2. The Inner Button: This element is solid white and covers the center of the glow container */}
             <button className="inner-button">
-              Gradform AI ✦ (Beta)
+              Coming Soon ✦
             </button>
           </div>
         </div>
