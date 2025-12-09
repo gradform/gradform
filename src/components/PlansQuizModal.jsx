@@ -16,8 +16,8 @@ const PlansQuizModal = ({ showModal, onClose }) => {
 
   const handleInitialQuestionAnswer = (answer) => {
     if (answer === 'yes') {
-      onClose(); // Close the modal
-      window.location.href = '/cif'; // Redirect to CIF page
+      setShowInitialQuestion(false); // Hide the initial question
+      setShowThankYouMessage(true); // Show the thank you message
     } else {
       setShowInitialQuestion(false); // Proceed to the quiz if "No" is selected
     }
