@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Ribbons from './components/Ribbons';
 
 const countryCodes = [
