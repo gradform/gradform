@@ -87,6 +87,20 @@ const CIFPage = () => {
     standardizedTestMaxGrade: '',
     standardizedTestMinGrade: '',
     standardizedTestYourGrade: '',
+    // Section 3 fields
+    hasAcademicVision: 'No', // 'Yes' or 'No'
+    preferredPlan: '', // 'A', 'B', 'C', 'D'
+    compassCountry1: '',
+    compassCountry2: '',
+    compassCountry3: '',
+    compassMajor1: '',
+    compassMajor2: '',
+    tuitionFeeRange: '',
+    vaultCountries: '',
+    vaultPrograms: '',
+    targetIntakeMonth: '',
+    targetIntakeYear: '',
+    visaSupport: 'No', // 'Yes' or 'No'
   });
 
   const handleInputChange = (e) => {
@@ -144,8 +158,27 @@ const CIFPage = () => {
       }
 
       console.log("Section 2 Data:", formData);
-      alert("Section 2 completed. Proceeding to next section (not yet implemented).");
-      // setStep(3); // Or navigate to next section
+      setStep(3);
+    } else if (step === 3) {
+      // Validation for Section 3
+      if (formData.hasAcademicVision === 'Yes' && formData.preferredPlan === '') {
+        alert("Please select your preferred plan of choice.");
+        return;
+      }
+
+      if (formData.preferredPlan === 'A' && formData.compassCountry1.trim() === '') {
+        alert("Please select at least one country of interest for Compass Session.");
+        return;
+      }
+
+      if (formData.preferredPlan === 'B' && (formData.vaultCountries.trim() === '' || formData.vaultPrograms.trim() === '' || formData.targetIntakeMonth.trim() === '' || formData.targetIntakeYear.trim() === '')) {
+        alert("Please fill in all required fields for Vault plan.");
+        return;
+      }
+
+      console.log("Section 3 Data:", formData);
+      alert("Form submitted successfully! Our team will contact you directly.");
+      // In a real application, you would submit the form data to a backend
     }
   };
 
@@ -696,6 +729,284 @@ const CIFPage = () => {
                   className="bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
                 >
                   Next
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+
+          {step === 3 && (
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+              className="space-y-6"
+            >
+              <h2 className="text-2xl font-semibold text-white mb-4">Section 3: Ambition Tracking</h2>
+
+              {/* Do you already have a vision for your academic future? */}
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">Do you already have a vision for your academic future?<span className="text-red-500">*</span></label>
+                <div className="flex flex-wrap gap-4">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="hasAcademicVision"
+                      value="Yes"
+                      checked={formData.hasAcademicVision === 'Yes'}
+                      onChange={handleInputChange}
+                      className="form-radio text-blue-600"
+                      required
+                    />
+                    <span className="ml-2 text-white">Yes</span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="hasAcademicVision"
+                      value="No"
+                      checked={formData.hasAcademicVision === 'No'}
+                      onChange={handleInputChange}
+                      className="form-radio text-blue-600"
+                      required
+                    />
+                    <span className="ml-2 text-white">No</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* What's your preferred plan of choice? */}
+              {formData.hasAcademicVision === 'Yes' && (
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2 mt-4">What's your preferred plan of choice?<span className="text-red-500">*</span></label>
+                  <div className="flex flex-wrap gap-4">
+                    {['A', 'B', 'C', 'D'].map((plan) => (
+                      <label key={plan} className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="preferredPlan"
+                          value={plan}
+                          checked={formData.preferredPlan === plan}
+                          onChange={handleInputChange}
+                          className="form-radio text-blue-600"
+                          required
+                        />
+                        <span className="ml-2 text-white">{plan}. {plan === 'A' ? 'Compass Session' : plan === 'B' ? 'Vault' : 'Ascend/Pinnacle'}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Conditional fields for Compass Session (Plan A) */}
+              {formData.preferredPlan === 'A' && (
+                <div className="mt-4 p-4 rounded-lg bg-white/15 border border-white/20 space-y-4">
+                  <h3 className="text-xl font-semibold text-white mb-2">Compass Session Details</h3>
+                  <div>
+                    <label htmlFor="compassCountry1" className="block text-sm font-medium text-white mb-2">1st Priority Country<span className="text-red-500">*</span></label>
+                    <select
+                      id="compassCountry1"
+                      name="compassCountry1"
+                      value={formData.compassCountry1}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      required
+                    >
+                      <option value="">Select Country</option>
+                      {countryCodes.map((country) => (
+                        <option key={country.iso} value={country.name} className="bg-white text-black">
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="compassCountry2" className="block text-sm font-medium text-white mb-2">2nd Priority Country</label>
+                    <select
+                      id="compassCountry2"
+                      name="compassCountry2"
+                      value={formData.compassCountry2}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                      <option value="">Select Country</option>
+                      {countryCodes.map((country) => (
+                        <option key={country.iso} value={country.name} className="bg-white text-black">
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="compassCountry3" className="block text-sm font-medium text-white mb-2">3rd Priority Country</label>
+                    <select
+                      id="compassCountry3"
+                      name="compassCountry3"
+                      value={formData.compassCountry3}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                      <option value="">Select Country</option>
+                      {countryCodes.map((country) => (
+                        <option key={country.iso} value={country.name} className="bg-white text-black">
+                          {country.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="compassMajor1" className="block text-sm font-medium text-white mb-2">1st Priority Major<span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      id="compassMajor1"
+                      name="compassMajor1"
+                      value={formData.compassMajor1}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="Enter 1st priority major"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="compassMajor2" className="block text-sm font-medium text-white mb-2">2nd Priority Major</label>
+                    <input
+                      type="text"
+                      id="compassMajor2"
+                      name="compassMajor2"
+                      value={formData.compassMajor2}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="Enter 2nd priority major"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="tuitionFeeRange" className="block text-sm font-medium text-white mb-2">Tuition Fee Range per Year (€)<span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      id="tuitionFeeRange"
+                      name="tuitionFeeRange"
+                      value={formData.tuitionFeeRange}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="e.g., 10,000 - 20,000"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Conditional fields for Vault (Plan B) */}
+              {formData.preferredPlan === 'B' && (
+                <div className="mt-4 p-4 rounded-lg bg-white/15 border border-white/20 space-y-4">
+                  <h3 className="text-xl font-semibold text-white mb-2">Vault Plan Details</h3>
+                  <div>
+                    <label htmlFor="vaultCountries" className="block text-sm font-medium text-white mb-2">Country(s) of Institutions (max 3)<span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      id="vaultCountries"
+                      name="vaultCountries"
+                      value={formData.vaultCountries}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="e.g., USA, Canada"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="vaultPrograms" className="block text-sm font-medium text-white mb-2">Program Titles (max 5)<span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      id="vaultPrograms"
+                      name="vaultPrograms"
+                      value={formData.vaultPrograms}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="e.g., Computer Science, MBA"
+                      required
+                    />
+                  </div>
+                  <div className="flex space-x-4">
+                    <div className="w-1/2">
+                      <label htmlFor="targetIntakeMonth" className="block text-sm font-medium text-white mb-2">Target Academic Intake: Month<span className="text-red-500">*</span></label>
+                      <input
+                        type="text"
+                        id="targetIntakeMonth"
+                        name="targetIntakeMonth"
+                        value={formData.targetIntakeMonth}
+                        onChange={handleInputChange}
+                        className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="e.g., September"
+                        required
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <label htmlFor="targetIntakeYear" className="block text-sm font-medium text-white mb-2">Year<span className="text-red-500">*</span></label>
+                      <input
+                        type="number"
+                        id="targetIntakeYear"
+                        name="targetIntakeYear"
+                        value={formData.targetIntakeYear}
+                        onChange={handleInputChange}
+                        className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        placeholder="e.g., 2025"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-white mb-2">Need Visa Application Support?<span className="text-red-500">*</span></label>
+                    <div className="flex flex-wrap gap-4">
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="visaSupport"
+                          value="Yes"
+                          checked={formData.visaSupport === 'Yes'}
+                          onChange={handleInputChange}
+                          className="form-radio text-blue-600"
+                          required
+                        />
+                        <span className="ml-2 text-white">Yes</span>
+                      </label>
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="visaSupport"
+                          value="No"
+                          checked={formData.visaSupport === 'No'}
+                          onChange={handleInputChange}
+                          className="form-radio text-blue-600"
+                          required
+                        />
+                        <span className="ml-2 text-white">No</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Conditional display for Ascend/Pinnacle (Plan C or D) */}
+              {(formData.preferredPlan === 'C' || formData.preferredPlan === 'D') && (
+                <div className="mt-4 p-4 rounded-lg bg-white/15 border border-white/20 text-center">
+                  <p className="text-lg font-semibold text-white">Congratulations! Our team will contact you directly.</p>
+                </div>
+              )}
+
+              <div className="flex justify-between mt-8">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleBack}
+                  className="bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-200"
+                >
+                  Back
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleNext}
+                  className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+                >
+                  SUBMIT FORM
                 </motion.button>
               </div>
             </motion.div>
