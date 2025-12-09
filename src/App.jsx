@@ -20,6 +20,7 @@ const PlansPage = React.lazy(() => import('./PlansPage'));
 const About = React.lazy(() => import('./components/About'));
 const Faqs = React.lazy(() => import('./components/Faqs'));
 const BlogPage = React.lazy(() => import('./BlogPage'));
+const CIFPage = React.lazy(() => import('./CIFPage'));
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +57,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/blogs" element={<BlogPage />} />
+          <Route path="/cif" element={<CIFPage />} />
         </Routes>
       </Suspense>
       <Footer />
