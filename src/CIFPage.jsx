@@ -11,7 +11,6 @@ const CIFPage = () => {
       <main className="relative z-10 grow flex items-center justify-center">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-white">Client Intake Form</h1>
       </main>
-      <Footer />
     </div>
   );
 };
