@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Ribbons from './components/Ribbons';
+import CIFSuccessModal from './components/CIFSuccessModal'; // Import the new modal
 
 const countryCodes = [
   { code: "+1", name: "United States", iso: "USA" },
@@ -88,24 +89,37 @@ const CIFPage = () => {
     standardizedTestMinGrade: '',
     standardizedTestYourGrade: '',
     // Section 3 fields
-    hasAcademicVision: 'No', // 'Yes' or 'No'
-    preferredPlan: '', // 'A', 'B', 'C', 'D'
+    hasAcademicVision: '',
+    preferredPlan: '',
     compassCountry1: '',
     compassCountry2: '',
     compassCountry3: '',
     compassMajor1: '',
     compassMajor2: '',
-    tuitionFeeRange: '',
+    compassTuitionFeeRange: '',
     vaultCountries: '',
-    vaultPrograms: '',
-    targetIntakeMonth: '',
-    targetIntakeYear: '',
-    visaSupport: 'No', // 'Yes' or 'No'
+    vaultProgramTitles: '',
+    vaultTargetAcademicMonth: '',
+    vaultTargetAcademicYear: '',
+    needVisaSupport: '',
   });
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // State for success modal
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+    // Optionally redirect or reset form here
+    setStep(1); // Reset to first step after closing modal
+    setFormData({ // Reset form data
+      firstName: '', lastName: '', email: '', countryCode: '+92', phoneNumber: '', dob: '', nationality: '', residence: '',
+      highestEducation: '', major: '', countryOfEducation: '', instituteName: '', gradingSystem: '', gradeABC: '', gradeGPA: '', gradePercentage: '', customMaxMarks: '', customMinMarks: '', customYourMarks: '', languageTest: 'No', languageTestName: '', languageTestMaxGrade: '', languageTestMinGrade: '', languageTestYourGrade: '', standardizedTest: 'No', standardizedTestName: '', standardizedTestMaxGrade: '', standardizedTestMinGrade: '', standardizedTestYourGrade: '',
+      hasAcademicVision: '', preferredPlan: '', compassCountry1: '', compassCountry2: '', compassCountry3: '', compassMajor1: '', compassMajor2: '', compassTuitionFeeRange: '', vaultCountries: '', vaultProgramTitles: '', vaultTargetAcademicMonth: '', vaultTargetAcademicYear: '', needVisaSupport: '',
+    });
   };
 
   const handleNext = () => {
@@ -158,32 +172,59 @@ const CIFPage = () => {
       }
 
       console.log("Section 2 Data:", formData);
+      console.log("Section 2 Data:", formData);
       setStep(3);
     } else if (step === 3) {
       // Validation for Section 3
-      if (formData.hasAcademicVision === 'Yes' && formData.preferredPlan === '') {
+      if (formData.hasAcademicVision === '') {
+        alert("Please answer if you have a vision for your academic future.");
+        return;
+      }
+      if (formData.preferredPlan === '') {
         alert("Please select your preferred plan of choice.");
         return;
       }
 
-      if (formData.preferredPlan === 'A' && formData.compassCountry1.trim() === '') {
-        alert("Please select at least one country of interest for Compass Session.");
-        return;
-      }
-
-      if (formData.preferredPlan === 'B' && (formData.vaultCountries.trim() === '' || formData.vaultPrograms.trim() === '' || formData.targetIntakeMonth.trim() === '' || formData.targetIntakeYear.trim() === '')) {
-        alert("Please fill in all required fields for Vault plan.");
+      if (formData.preferredPlan === 'A. Compass Session') {
+        const requiredCompassFields = ['compassCountry1', 'compassMajor1', 'compassTuitionFeeRange'];
+        const isCompassValid = requiredCompassFields.every(field => formData[field].trim() !== '');
+        if (!isCompassValid) {
+          alert("Please fill in all required fields for Compass Session.");
+          return;
+        }
+      } else if (formData.preferredPlan === 'B. Vault') {
+        const requiredVaultFields = ['vaultCountries', 'vaultProgramTitles', 'vaultTargetAcademicMonth', 'vaultTargetAcademicYear', 'needVisaSupport'];
+        const isVaultValid = requiredVaultFields.every(field => formData[field].trim() !== '');
+        if (!isVaultValid) {
+          alert("Please fill in all required fields for Vault.");
+          return;
+        }
+      } else if (formData.preferredPlan === 'C. Ascend' || formData.preferredPlan === 'D. Pinnacle') {
+        // Instead of alert, we will trigger a modal here
+        setShowSuccessModal(true);
         return;
       }
 
       console.log("Section 3 Data:", formData);
-      alert("Form submitted successfully! Our team will contact you directly.");
-      // In a real application, you would submit the form data to a backend
+      alert("Form submitted successfully!");
+      // Here you would typically submit the form
     }
   };
 
   const handleBack = () => {
+    if (step === 3 && (formData.preferredPlan === 'C. Ascend' || formData.preferredPlan === 'D. Pinnacle')) {
+      // If on step 3 and Ascend/Pinnacle was selected, going back should reset the plan choice
+      setFormData({ ...formData, preferredPlan: '' });
+    }
     setStep(prevStep => prevStep - 1);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // This function will be called when the form is actually submitted
+    // For Ascend/Pinnacle, the alert is shown in handleNext, so this won't be reached
+    console.log("Final Form Data:", formData);
+    alert("Form submitted!");
   };
 
   return (
@@ -775,34 +816,32 @@ const CIFPage = () => {
               </div>
 
               {/* What's your preferred plan of choice? */}
-              {formData.hasAcademicVision === 'Yes' && (
-                <div>
-                  <label className="block text-sm font-medium text-white mb-2 mt-4">What's your preferred plan of choice?<span className="text-red-500">*</span></label>
-                  <div className="flex flex-wrap gap-4">
-                    {['A', 'B', 'C', 'D'].map((plan) => (
-                      <label key={plan} className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          name="preferredPlan"
-                          value={plan}
-                          checked={formData.preferredPlan === plan}
-                          onChange={handleInputChange}
-                          className="form-radio text-blue-600"
-                          required
-                        />
-                        <span className="ml-2 text-white">{plan}. {plan === 'A' ? 'Compass Session' : plan === 'B' ? 'Vault' : 'Ascend/Pinnacle'}</span>
-                      </label>
-                    ))}
-                  </div>
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">What's your preferred plan of choice?<span className="text-red-500">*</span></label>
+                <div className="flex flex-wrap gap-4">
+                  {['A. Compass Session', 'B. Vault', 'C. Ascend', 'D. Pinnacle'].map((plan) => (
+                    <label key={plan} className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        name="preferredPlan"
+                        value={plan}
+                        checked={formData.preferredPlan === plan}
+                        onChange={handleInputChange}
+                        className="form-radio text-blue-600"
+                        required
+                      />
+                      <span className="ml-2 text-white">{plan}</span>
+                    </label>
+                  ))}
                 </div>
-              )}
+              </div>
 
-              {/* Conditional fields for Compass Session (Plan A) */}
-              {formData.preferredPlan === 'A' && (
+              {/* Conditional fields for A. Compass Session */}
+              {formData.preferredPlan === 'A. Compass Session' && (
                 <div className="mt-4 p-4 rounded-lg bg-white/15 border border-white/20 space-y-4">
                   <h3 className="text-xl font-semibold text-white mb-2">Compass Session Details</h3>
                   <div>
-                    <label htmlFor="compassCountry1" className="block text-sm font-medium text-white mb-2">1st Priority Country<span className="text-red-500">*</span></label>
+                    <label htmlFor="compassCountry1" className="block text-sm font-medium text-white mb-2">Country(s) of Interest (At least 1 country to be selected): 1st Priority<span className="text-red-500">*</span></label>
                     <select
                       id="compassCountry1"
                       name="compassCountry1"
@@ -820,7 +859,7 @@ const CIFPage = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="compassCountry2" className="block text-sm font-medium text-white mb-2">2nd Priority Country</label>
+                    <label htmlFor="compassCountry2" className="block text-sm font-medium text-white mb-2">2nd Priority</label>
                     <select
                       id="compassCountry2"
                       name="compassCountry2"
@@ -837,7 +876,7 @@ const CIFPage = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="compassCountry3" className="block text-sm font-medium text-white mb-2">3rd Priority Country</label>
+                    <label htmlFor="compassCountry3" className="block text-sm font-medium text-white mb-2">3rd Priority</label>
                     <select
                       id="compassCountry3"
                       name="compassCountry3"
@@ -854,7 +893,7 @@ const CIFPage = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="compassMajor1" className="block text-sm font-medium text-white mb-2">1st Priority Major<span className="text-red-500">*</span></label>
+                    <label htmlFor="compassMajor1" className="block text-sm font-medium text-white mb-2">Majors of Interest (max 2): 1st Priority<span className="text-red-500">*</span></label>
                     <input
                       type="text"
                       id="compassMajor1"
@@ -867,7 +906,7 @@ const CIFPage = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="compassMajor2" className="block text-sm font-medium text-white mb-2">2nd Priority Major</label>
+                    <label htmlFor="compassMajor2" className="block text-sm font-medium text-white mb-2">2nd Priority</label>
                     <input
                       type="text"
                       id="compassMajor2"
@@ -879,25 +918,25 @@ const CIFPage = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="tuitionFeeRange" className="block text-sm font-medium text-white mb-2">Tuition Fee Range per Year (€)<span className="text-red-500">*</span></label>
+                    <label htmlFor="compassTuitionFeeRange" className="block text-sm font-medium text-white mb-2">Tuition Fee Range per Year (€)<span className="text-red-500">*</span></label>
                     <input
                       type="text"
-                      id="tuitionFeeRange"
-                      name="tuitionFeeRange"
-                      value={formData.tuitionFeeRange}
+                      id="compassTuitionFeeRange"
+                      name="compassTuitionFeeRange"
+                      value={formData.compassTuitionFeeRange}
                       onChange={handleInputChange}
                       className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      placeholder="e.g., 10,000 - 20,000"
+                      placeholder="e.g., 10000-20000"
                       required
                     />
                   </div>
                 </div>
               )}
 
-              {/* Conditional fields for Vault (Plan B) */}
-              {formData.preferredPlan === 'B' && (
+              {/* Conditional fields for B. Vault */}
+              {formData.preferredPlan === 'B. Vault' && (
                 <div className="mt-4 p-4 rounded-lg bg-white/15 border border-white/20 space-y-4">
-                  <h3 className="text-xl font-semibold text-white mb-2">Vault Plan Details</h3>
+                  <h3 className="text-xl font-semibold text-white mb-2">Vault Details</h3>
                   <div>
                     <label htmlFor="vaultCountries" className="block text-sm font-medium text-white mb-2">Country(s) of Institutions (max 3)<span className="text-red-500">*</span></label>
                     <input
@@ -907,31 +946,31 @@ const CIFPage = () => {
                       value={formData.vaultCountries}
                       onChange={handleInputChange}
                       className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      placeholder="e.g., USA, Canada"
+                      placeholder="e.g., USA, Canada, UK"
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="vaultPrograms" className="block text-sm font-medium text-white mb-2">Program Titles (max 5)<span className="text-red-500">*</span></label>
+                    <label htmlFor="vaultProgramTitles" className="block text-sm font-medium text-white mb-2">Program Titles (max 5)<span className="text-red-500">*</span></label>
                     <input
                       type="text"
-                      id="vaultPrograms"
-                      name="vaultPrograms"
-                      value={formData.vaultPrograms}
+                      id="vaultProgramTitles"
+                      name="vaultProgramTitles"
+                      value={formData.vaultProgramTitles}
                       onChange={handleInputChange}
                       className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      placeholder="e.g., Computer Science, MBA"
+                      placeholder="e.g., Computer Science, Business Analytics"
                       required
                     />
                   </div>
                   <div className="flex space-x-4">
                     <div className="w-1/2">
-                      <label htmlFor="targetIntakeMonth" className="block text-sm font-medium text-white mb-2">Target Academic Intake: Month<span className="text-red-500">*</span></label>
+                      <label htmlFor="vaultTargetAcademicMonth" className="block text-sm font-medium text-white mb-2">Target Academic Intake: Month<span className="text-red-500">*</span></label>
                       <input
                         type="text"
-                        id="targetIntakeMonth"
-                        name="targetIntakeMonth"
-                        value={formData.targetIntakeMonth}
+                        id="vaultTargetAcademicMonth"
+                        name="vaultTargetAcademicMonth"
+                        value={formData.vaultTargetAcademicMonth}
                         onChange={handleInputChange}
                         className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="e.g., September"
@@ -939,12 +978,12 @@ const CIFPage = () => {
                       />
                     </div>
                     <div className="w-1/2">
-                      <label htmlFor="targetIntakeYear" className="block text-sm font-medium text-white mb-2">Year<span className="text-red-500">*</span></label>
+                      <label htmlFor="vaultTargetAcademicYear" className="block text-sm font-medium text-white mb-2">Year<span className="text-red-500">*</span></label>
                       <input
                         type="number"
-                        id="targetIntakeYear"
-                        name="targetIntakeYear"
-                        value={formData.targetIntakeYear}
+                        id="vaultTargetAcademicYear"
+                        name="vaultTargetAcademicYear"
+                        value={formData.vaultTargetAcademicYear}
                         onChange={handleInputChange}
                         className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="e.g., 2025"
@@ -958,9 +997,9 @@ const CIFPage = () => {
                       <label className="inline-flex items-center">
                         <input
                           type="radio"
-                          name="visaSupport"
+                          name="needVisaSupport"
                           value="Yes"
-                          checked={formData.visaSupport === 'Yes'}
+                          checked={formData.needVisaSupport === 'Yes'}
                           onChange={handleInputChange}
                           className="form-radio text-blue-600"
                           required
@@ -970,9 +1009,9 @@ const CIFPage = () => {
                       <label className="inline-flex items-center">
                         <input
                           type="radio"
-                          name="visaSupport"
+                          name="needVisaSupport"
                           value="No"
-                          checked={formData.visaSupport === 'No'}
+                          checked={formData.needVisaSupport === 'No'}
                           onChange={handleInputChange}
                           className="form-radio text-blue-600"
                           required
@@ -981,13 +1020,6 @@ const CIFPage = () => {
                       </label>
                     </div>
                   </div>
-                </div>
-              )}
-
-              {/* Conditional display for Ascend/Pinnacle (Plan C or D) */}
-              {(formData.preferredPlan === 'C' || formData.preferredPlan === 'D') && (
-                <div className="mt-4 p-4 rounded-lg bg-white/15 border border-white/20 text-center">
-                  <p className="text-lg font-semibold text-white">Congratulations! Our team will contact you directly.</p>
                 </div>
               )}
 
@@ -1004,15 +1036,17 @@ const CIFPage = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleNext}
-                  className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+                  className="bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
                 >
-                  SUBMIT FORM
+                  Submit
                 </motion.button>
               </div>
             </motion.div>
           )}
         </motion.div>
       </main>
+
+      <CIFSuccessModal showModal={showSuccessModal} onClose={handleCloseSuccessModal} />
     </div>
   );
 };
