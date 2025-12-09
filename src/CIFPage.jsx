@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Ribbons from './components/Ribbons';
 
 const countryCodes = [
@@ -74,13 +75,15 @@ const CIFPage = () => {
     const requiredFields = ['firstName', 'lastName', 'email', 'phoneNumber', 'dob', 'nationality', 'residence'];
     const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
 
-    if (isFormValid) {
-      console.log("Section 1 Data:", formData);
-      alert("Section 1 completed. Proceeding to Section 2 (not yet implemented).");
-      // In a real application, you would likely update a step state or navigate to a new route
-    } else {
+    if (!isFormValid) {
       alert("Please fill in all required fields before proceeding.");
+      return;
     }
+
+    // Logic to handle moving to the next section (Section 2)
+    console.log("Section 1 Data:", formData);
+    alert("Section 1 completed. Proceeding to Section 2 (not yet implemented).");
+    // In a real application, you would likely update a step state or navigate to a new route
   };
 
   return (
@@ -155,10 +158,11 @@ const CIFPage = () => {
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleInputChange}
-                  className="p-3 rounded-lg bg-white text-black border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
                 >
                   {countryCodes.map((country) => (
-                    <option key={country.iso} value={country.code} className="bg-gray-800 text-white">
+                    <option key={country.iso} value={country.code} className="bg-white text-black">
                       {country.code} ({country.iso})
                     </option>
                   ))}
@@ -184,7 +188,7 @@ const CIFPage = () => {
                 name="dob"
                 value={formData.dob}
                 onChange={handleInputChange}
-                className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 custom-date-input"
+                className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               />
             </div>
