@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Ribbons from './components/Ribbons';
 import CIFSuccessModal from './components/CIFSuccessModal'; // Import the new modal
+import SearchableDropdown from './components/SearchableDropdown'; // Import the new SearchableDropdown component
 
+// Comprehensive list of countries for Section 1
+const allCountries = [
+  "United States", "United Kingdom", "Canada", "Australia", "Germany", "France", "New Zealand", "Ireland", "Switzerland", "Sweden", "Netherlands", "Japan", "Singapore", "South Korea", "China", "India", "Pakistan", "Bangladesh", "Nepal", "Sri Lanka", "Vietnam", "Indonesia", "Malaysia", "Thailand", "Philippines", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain", "Turkey", "Egypt", "Nigeria", "Ghana", "Kenya", "South Africa", "Morocco", "Russia", "Italy", "Spain", "Romania", "Ukraine", "Brazil", "Mexico", "Colombia", "Argentina",
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Armenia", "Austria", "Azerbaijan", "Bahamas", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Central African Republic", "Chad", "Chile", "Comoros", "Congo (Brazzaville)", "Congo (Kinshasa)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor (Timor-Leste)", "Ecuador", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "Gabon", "Gambia", "Georgia", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "Iran", "Iraq", "Israel", "Jamaica", "Jordan", "Kazakhstan", "Kiribati", "Kosovo", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nicaragua", "Niger", "North Korea", "North Macedonia", "Norway", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Poland", "Portugal", "Romania", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Sudan", "Sudan", "Suriname", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkmenistan", "Tuvalu", "Uganda", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Yemen", "Zambia", "Zimbabwe"
+];
+
+// Country codes for phone numbers (existing list)
 const countryCodes = [
   { code: "+1", name: "United States", iso: "USA" },
   { code: "+44", name: "United Kingdom", iso: "GBR" },
@@ -52,6 +60,11 @@ const countryCodes = [
   { code: "+52", name: "Mexico", iso: "MEX" },
   { code: "+57", name: "Colombia", iso: "COL" },
   { code: "+54", name: "Argentina", iso: "ARG" }
+];
+
+// Specific country list for Section 3 Compass Session
+const compassCountryList = [
+  "Italy", "Germany", "Netherlands", "Sweden", "Finland", "USA", "Canada", "Australia", "United Kingdom", "Turkey", "Cyprus"
 ];
 
 const CIFPage = () => {
@@ -104,11 +117,52 @@ const CIFPage = () => {
     needVisaSupport: '',
   });
 
+  const [errors, setErrors] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false); // State for success modal
+
+  const validateField = useCallback((name, value) => {
+    let error = '';
+    switch (name) {
+      case 'firstName':
+      case 'lastName':
+        if (!/^[a-zA-Z\s]*$/.test(value)) {
+          error = 'Only alphabetic characters allowed.';
+        }
+        break;
+      case 'email':
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          error = 'Invalid email format.';
+        }
+        break;
+      case 'phoneNumber':
+        if (!/^\d+$/.test(value)) {
+          error = 'Only numeric input allowed.';
+        }
+        break;
+      case 'dob':
+        const currentYear = new Date().getFullYear();
+        const selectedYear = new Date(value).getFullYear();
+        if (selectedYear < currentYear - 70 || selectedYear > currentYear) {
+          error = `Date must be within the last 70 years and not in the future.`;
+        }
+        break;
+      case 'nationality':
+      case 'residence':
+        if (!allCountries.includes(value)) {
+          error = 'Please select a country from the list.';
+        }
+        break;
+      default:
+        break;
+    }
+    setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    return error;
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    validateField(name, value); // Validate on change
   };
 
   const handleCloseSuccessModal = () => {
@@ -120,15 +174,23 @@ const CIFPage = () => {
       highestEducation: '', major: '', countryOfEducation: '', instituteName: '', gradingSystem: '', gradeABC: '', gradeGPA: '', gradePercentage: '', customMaxMarks: '', customMinMarks: '', customYourMarks: '', languageTest: 'No', languageTestName: '', languageTestMaxGrade: '', languageTestMinGrade: '', languageTestYourGrade: '', standardizedTest: 'No', standardizedTestName: '', standardizedTestMaxGrade: '', standardizedTestMinGrade: '', standardizedTestYourGrade: '',
       hasAcademicVision: '', preferredPlan: '', compassCountry1: '', compassCountry2: '', compassCountry3: '', compassMajor1: '', compassMajor2: '', compassTuitionFeeRange: '', vaultCountries: '', vaultProgramTitles: '', vaultTargetAcademicMonth: '', vaultTargetAcademicYear: '', needVisaSupport: '',
     });
+    setErrors({}); // Clear errors on modal close
   };
 
   const handleNext = () => {
-    if (step === 1) {
-      const requiredFields = ['firstName', 'lastName', 'email', 'phoneNumber', 'dob', 'nationality', 'residence'];
-      const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
+    let currentStepErrors = {};
+    let isStepValid = true;
 
-      if (!isFormValid) {
-        alert("Please fill in all required fields in Section 1 before proceeding.");
+    if (step === 1) {
+      const fieldsToValidate = ['firstName', 'lastName', 'email', 'phoneNumber', 'dob', 'nationality', 'residence'];
+      fieldsToValidate.forEach(field => {
+        const error = validateField(field, formData[field]);
+        if (formData[field].trim() === '' || error) {
+          isStepValid = false;
+        }
+      });
+      if (!isStepValid) {
+        alert("Please fill in all required fields and correct errors in Section 1 before proceeding.");
         return;
       }
       setStep(2);
@@ -172,7 +234,6 @@ const CIFPage = () => {
       }
 
       console.log("Section 2 Data:", formData);
-      console.log("Section 2 Data:", formData);
       setStep(3);
     } else if (step === 3) {
       // Validation for Section 3
@@ -199,15 +260,9 @@ const CIFPage = () => {
           alert("Please fill in all required fields for Vault.");
           return;
         }
-      } else if (formData.preferredPlan === 'C. Ascend' || formData.preferredPlan === 'D. Pinnacle') {
-        // Instead of alert, we will trigger a modal here
-        setShowSuccessModal(true);
-        return;
       }
-
-      console.log("Section 3 Data:", formData);
-      alert("Form submitted successfully!");
-      // Here you would typically submit the form
+      // For all plans, show the success modal
+      setShowSuccessModal(true);
     }
   };
 
@@ -226,6 +281,17 @@ const CIFPage = () => {
     console.log("Final Form Data:", formData);
     alert("Form submitted!");
   };
+
+  const maxDate = useMemo(() => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }, []);
+
+  const minDate = useMemo(() => {
+    const seventyYearsAgo = new Date();
+    seventyYearsAgo.setFullYear(seventyYearsAgo.getFullYear() - 70);
+    return seventyYearsAgo.toISOString().split('T')[0];
+  }, []);
 
   return (
     <div className="bg-linear-to-r from-[#0000CD] via-[#0000B0] to-[#4B0082] text-white min-h-screen flex flex-col">
@@ -261,6 +327,7 @@ const CIFPage = () => {
                   placeholder="Enter your first name(s)"
                   required
                 />
+                {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
               </div>
 
               <div>
@@ -275,6 +342,7 @@ const CIFPage = () => {
                   placeholder="Enter your last name"
                   required
                 />
+                {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
               </div>
 
               <div>
@@ -289,6 +357,7 @@ const CIFPage = () => {
                   placeholder="Enter your email address"
                   required
                 />
+                {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
               </div>
 
               <div>
@@ -319,6 +388,7 @@ const CIFPage = () => {
                     required
                   />
                 </div>
+                {errors.phoneNumber && <p className="text-red-400 text-sm mt-1">{errors.phoneNumber}</p>}
               </div>
 
               <div>
@@ -331,35 +401,38 @@ const CIFPage = () => {
                   onChange={handleInputChange}
                   className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   required
+                  max={maxDate}
+                  min={minDate}
                 />
+                {errors.dob && <p className="text-red-400 text-sm mt-1">{errors.dob}</p>}
               </div>
 
               <div>
-                <label htmlFor="nationality" className="block text-sm font-medium text-white mb-2">Country of Nationality<span className="text-red-500">*</span></label>
-                <input
-                  type="text"
+                <SearchableDropdown
                   id="nationality"
                   name="nationality"
                   value={formData.nationality}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  options={allCountries}
                   placeholder="Enter your country of nationality"
                   required
+                  label="Country of Nationality"
                 />
+                {errors.nationality && <p className="text-red-400 text-sm mt-1">{errors.nationality}</p>}
               </div>
 
               <div>
-                <label htmlFor="residence" className="block text-sm font-medium text-white mb-2">Country of Residence<span className="text-red-500">*</span></label>
-                <input
-                  type="text"
+                <SearchableDropdown
                   id="residence"
                   name="residence"
                   value={formData.residence}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  options={allCountries}
                   placeholder="Enter your country of residence"
                   required
+                  label="Country of Residence"
                 />
+                {errors.residence && <p className="text-red-400 text-sm mt-1">{errors.residence}</p>}
               </div>
 
               <motion.button
@@ -851,9 +924,9 @@ const CIFPage = () => {
                       required
                     >
                       <option value="">Select Country</option>
-                      {countryCodes.map((country) => (
-                        <option key={country.iso} value={country.name} className="bg-white text-black">
-                          {country.name}
+                      {compassCountryList.map((country) => (
+                        <option key={country} value={country} className="bg-white text-black">
+                          {country}
                         </option>
                       ))}
                     </select>
@@ -868,9 +941,9 @@ const CIFPage = () => {
                       className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="">Select Country</option>
-                      {countryCodes.map((country) => (
-                        <option key={country.iso} value={country.name} className="bg-white text-black">
-                          {country.name}
+                      {compassCountryList.map((country) => (
+                        <option key={country} value={country} className="bg-white text-black">
+                          {country}
                         </option>
                       ))}
                     </select>
@@ -885,9 +958,9 @@ const CIFPage = () => {
                       className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="">Select Country</option>
-                      {countryCodes.map((country) => (
-                        <option key={country.iso} value={country.name} className="bg-white text-black">
-                          {country.name}
+                      {compassCountryList.map((country) => (
+                        <option key={country} value={country} className="bg-white text-black">
+                          {country}
                         </option>
                       ))}
                     </select>
