@@ -13,5 +13,6 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
       },
     },
+    chunkSizeWarningLimit: 1000, // Adjust chunk size limit to 1000kb
   },
 })
