@@ -72,14 +72,6 @@ const CIFPage = () => {
   };
 
   const handleNext = () => {
-    const requiredFields = ['firstName', 'lastName', 'email', 'phoneNumber', 'dob', 'nationality', 'residence'];
-    const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
-
-    if (!isFormValid) {
-      alert("Please fill in all required fields before proceeding.");
-      return;
-    }
-
     // Logic to handle moving to the next section (Section 2)
     console.log("Section 1 Data:", formData);
     alert("Section 1 completed. Proceeding to Section 2 (not yet implemented).");
@@ -109,7 +101,7 @@ const CIFPage = () => {
             <h2 className="text-2xl font-semibold text-white mb-4">Section 1: Basic Information</h2>
 
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium text-white mb-2">First Name(s)<span className="text-red-500">*</span></label>
+              <label htmlFor="firstName" className="block text-sm font-medium text-white mb-2">First Name(s)</label>
               <input
                 type="text"
                 id="firstName"
@@ -118,12 +110,11 @@ const CIFPage = () => {
                 onChange={handleInputChange}
                 className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter your first name(s)"
-                required
               />
             </div>
 
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium text-white mb-2">Last Name<span className="text-red-500">*</span></label>
+              <label htmlFor="lastName" className="block text-sm font-medium text-white mb-2">Last Name</label>
               <input
                 type="text"
                 id="lastName"
@@ -132,12 +123,11 @@ const CIFPage = () => {
                 onChange={handleInputChange}
                 className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter your last name"
-                required
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-white mb-2">Email Address<span className="text-red-500">*</span></label>
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-2">Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -146,23 +136,21 @@ const CIFPage = () => {
                 onChange={handleInputChange}
                 className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter your email address"
-                required
               />
             </div>
 
             <div>
-              <label htmlFor="phoneNumber" className="block text-sm font-medium text-white mb-2">Phone Number (WhatsApp enabled)<span className="text-red-500">*</span></label>
+              <label htmlFor="phoneNumber" className="block text-sm font-medium text-white mb-2">Phone Number (WhatsApp enabled)</label>
               <div className="flex space-x-2">
                 <select
                   id="countryCode"
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleInputChange}
-                  className="p-3 rounded-lg bg-white/15 border border-white/20 text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  required
+                  className="p-3 rounded-lg bg-white/15 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   {countryCodes.map((country) => (
-                    <option key={country.iso} value={country.code} className="bg-white text-black">
+                    <option key={country.iso} value={country.code}>
                       {country.code} ({country.iso})
                     </option>
                   ))}
@@ -175,13 +163,12 @@ const CIFPage = () => {
                   onChange={handleInputChange}
                   className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   placeholder="Enter your phone number"
-                  required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="dob" className="block text-sm font-medium text-white mb-2">Date of Birth (DD/MM/YYYY)<span className="text-red-500">*</span></label>
+              <label htmlFor="dob" className="block text-sm font-medium text-white mb-2">Date of Birth (DD/MM/YYYY)</label>
               <input
                 type="date"
                 id="dob"
@@ -189,12 +176,11 @@ const CIFPage = () => {
                 value={formData.dob}
                 onChange={handleInputChange}
                 className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
               />
             </div>
 
             <div>
-              <label htmlFor="nationality" className="block text-sm font-medium text-white mb-2">Country of Nationality<span className="text-red-500">*</span></label>
+              <label htmlFor="nationality" className="block text-sm font-medium text-white mb-2">Country of Nationality</label>
               <input
                 type="text"
                 id="nationality"
@@ -203,12 +189,11 @@ const CIFPage = () => {
                 onChange={handleInputChange}
                 className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter your country of nationality"
-                required
               />
             </div>
 
             <div>
-              <label htmlFor="residence" className="block text-sm font-medium text-white mb-2">Country of Residence<span className="text-red-500">*</span></label>
+              <label htmlFor="residence" className="block text-sm font-medium text-white mb-2">Country of Residence</label>
               <input
                 type="text"
                 id="residence"
@@ -217,7 +202,6 @@ const CIFPage = () => {
                 onChange={handleInputChange}
                 className="w-full p-3 rounded-lg bg-white/15 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Enter your country of residence"
-                required
               />
             </div>
 
@@ -232,6 +216,7 @@ const CIFPage = () => {
           </motion.div>
         </motion.div>
       </main>
+      <Footer />
     </div>
   );
 };
