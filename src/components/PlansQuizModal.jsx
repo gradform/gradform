@@ -16,15 +16,16 @@ const PlansQuizModal = ({ showModal, onClose }) => {
 
   const handleInitialQuestionAnswer = (answer) => {
     if (answer === 'yes') {
-      setShowInitialQuestion(false); // Hide the initial question
-      setShowThankYouMessage(true); // Show the thank you message
+      onClose(); // Close the modal
+      window.location.href = '/cif'; // Redirect to CIF page
     } else {
       setShowInitialQuestion(false); // Proceed to the quiz if "No" is selected
     }
   };
 
   const handleThankYouNext = () => {
-    onClose(); // Close the modal after "next" is clicked
+    onClose(); // Close the modal
+    window.location.href = '/cif'; // Redirect to CIF page
   };
 
   const determineRecommendedService = useCallback(() => {
@@ -140,7 +141,7 @@ const PlansQuizModal = ({ showModal, onClose }) => {
               onClick={handleThankYouNext}
               className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
-              Next
+              Continue ↗
             </button>
           </div>
         </div>
